@@ -1,0 +1,27 @@
+[out:json][timeout:90];
+// Get Sweden boundary
+area["ISO3166-1"="SE"][admin_level=2]->.sweden;
+
+(
+  // Electric vehicle charging stations
+  node["amenity"="charging_station"](area.sweden);
+  way["amenity"="charging_station"](area.sweden);
+  rel["amenity"="charging_station"](area.sweden);
+  
+  // Additional charging station tags
+  node["highway"="charging_station"](area.sweden);
+  node["amenity"="charging_station"]["bicycle"="yes"](area.sweden);
+  
+  // Fast charging stations
+  node["amenity"="charging_station"]["charging_station:output"="fast"](area.sweden);
+  node["amenity"="charging_station"]["fast_charging"="yes"](area.sweden);
+  
+  // Tesla Superchargers (often tagged separately)
+  node["brand"="Tesla"]["amenity"="charging_station"](area.sweden);
+  node["brand"="Tesla Supercharger"](area.sweden);
+  
+  // Parking with charging (sometimes not tagged as amenity=charging_station)
+  node["parking:charging"="yes"](area.sweden);
+  node["capacity:charging"](area.sweden);
+);
+out center;
